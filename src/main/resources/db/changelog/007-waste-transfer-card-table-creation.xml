@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="007-waste-transfer-card-table-creation" author="FP">
+        <createTable tableName="waste_transfer_card">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="INT"/>
+            <column name="number" type="VARCHAR(255)"/>
+            <column name="date" type="DATE"/>
+            <column name="weight_mg" type="DECIMAL(19,2)"/>
+            <column name="driver_car_registration" type="VARCHAR(255)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="waste_transfer_card"
+                                 baseColumnNames="client_id"
+                                 referencedTableName="client"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_waste_transfer_card_client"/>
+    </changeSet>
+</databaseChangeLog>
+

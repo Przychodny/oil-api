@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="009-pickup-table-creation" author="FP">
+        <createTable tableName="pickup">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="driver_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="invoice_id" type="INT"/>
+            <column name="waste_transfer_card_id" type="INT"/>
+            <column name="pickup_time" type="TIMESTAMP"/>
+            <column name="net_price_per_kg" type="DECIMAL(19,2)"/>
+            <column name="kg" type="DECIMAL(19,2)"/>
+            <column name="net_total" type="DECIMAL(19,2)"/>
+            <column name="vat" type="DECIMAL(19,2)"/>
+            <column name="gross_total" type="DECIMAL(19,2)"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="pickup"
+                                 baseColumnNames="driver_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_pickup_driver"/>
+        <addForeignKeyConstraint baseTableName="pickup"
+                                 baseColumnNames="client_id"
+                                 referencedTableName="client"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_pickup_client"/>
+        <addForeignKeyConstraint baseTableName="pickup"
+                                 baseColumnNames="invoice_id"
+                                 referencedTableName="invoice"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_pickup_invoice"/>
+        <addForeignKeyConstraint baseTableName="pickup"
+                                 baseColumnNames="waste_transfer_card_id"
+                                 referencedTableName="waste_transfer_card"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_pickup_waste_transfer_card"/>
+    </changeSet>
+</databaseChangeLog>

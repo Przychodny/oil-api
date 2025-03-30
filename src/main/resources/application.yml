@@ -1,0 +1,20 @@
+oil:
+  api:
+    base-url: https://rejestr.io/api/v2/org
+    api-key: ea49315c-90aa-4190-8902-d4958eb577ae
+spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/oil
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog-master.xml
+    drop-first: false

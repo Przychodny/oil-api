@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="004-daily-register-table-creation" author="FP">
+        <createTable tableName="daily_register">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="driver_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="DATE"/>
+            <column name="starting_balance" type="DECIMAL(19,2)"/>
+            <column name="gross_amount_spent" type="DECIMAL(19,2)"/>
+            <column name="total_oil_collected" type="DECIMAL(19,2)"/>
+            <column name="net_additional_expenses" type="DECIMAL(19,2)"/>
+            <column name="final_balance" type="DECIMAL(19,2)"/>
+            <column name="deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="daily_register"
+                                 baseColumnNames="driver_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_daily_register_driver"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="006-invoice-table-creation" author="FP">
+        <createTable tableName="invoice">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="INT"/>
+            <column name="number" type="VARCHAR(255)"/>
+            <column name="date" type="DATE"/>
+            <column name="net_price_per_kg" type="DECIMAL(19,2)"/>
+            <column name="kg" type="DECIMAL(19,2)"/>
+            <column name="net_total" type="DECIMAL(19,2)"/>
+            <column name="vat" type="DECIMAL(19,2)"/>
+            <column name="gross_total" type="DECIMAL(19,2)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="invoice"
+                                 baseColumnNames="client_id"
+                                 referencedTableName="client"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_invoice_client"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="005-expense-table-creation" author="FP">
+        <createTable tableName="expense">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="net_amount" type="DECIMAL(19,2)"/>
+            <column name="vat_percentage" type="DECIMAL(19,2)"/>
+            <column name="gross_amount" type="DECIMAL(19,2)"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="local_date_time" type="TIMESTAMP"/>
+            <column name="driver_id" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="expense"
+                                 baseColumnNames="driver_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_expense_driver"/>
+    </changeSet>
+</databaseChangeLog>
+

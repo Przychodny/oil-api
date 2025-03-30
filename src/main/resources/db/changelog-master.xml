@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <include file="changelog/001-user-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/002-car-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/003-client-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/004-daily-register-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/005-expense-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/006-invoice-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/007-waste-transfer-card-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/008-update-balance-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/009-pickup-table-creation.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/010-add-daily-register-id-to-expense.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/011-add-daily-register-id-to-pickup.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/012-add-foreign-key-daily-register-pickup.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
