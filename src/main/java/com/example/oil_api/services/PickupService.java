@@ -45,6 +45,10 @@ public class PickupService {
         BigDecimal vat = netTotal.multiply(new BigDecimal("0.23")).setScale(2, RoundingMode.HALF_UP);
         BigDecimal grossTotal = netTotal.add(vat);
 
+        if (driver.getBalance().compareTo(grossTotal) < 0) {
+            throw new LayerInstantiationException();
+        }
+
         driver.setBalance(driver.getBalance().subtract(grossTotal));
 
         pickup.setDriver(driver);

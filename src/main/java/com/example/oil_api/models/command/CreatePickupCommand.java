@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @Setter
 public class CreatePickupCommand {
 
-    private Integer driverId;
     private Integer clientId;
     private BigDecimal netPricePerKg;
     private BigDecimal kg;

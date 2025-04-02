@@ -13,7 +13,5 @@ import java.time.LocalDate;
 @Builder
 public class CreateDailyRegisterCommand {
 
-    private Integer driverId;
     private LocalDate localDate;
-
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,12 +59,7 @@ public class DailyRegisterService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal finalBalance = driver.getBalance();
-        BigDecimal modificationSum = updateBalanceRepository.findSumByDriverIdAndModificationDate(driverId, command.getLocalDate());
-        if (modificationSum == null) {
-            modificationSum = BigDecimal.ZERO;
-        }
-
-        BigDecimal startingBalance = getStartingBalance(driver, grossAmountSpent, grossAdditionalExpenses, modificationSum);
+        BigDecimal startingBalance = getStartingBalance(driver, grossAmountSpent, grossAdditionalExpenses, command.getLocalDate());
 
         DailyRegister register = dailyRegisterMapper.mapFromCommand(command);
         register.setDriver(driver);
@@ -93,15 +89,18 @@ public class DailyRegisterService {
     }
 
     private BigDecimal getStartingBalance(Driver driver, BigDecimal grossAmountSpent, BigDecimal grossAdditionalExpenses,
-                                          BigDecimal updateBalanceSum) {
-        BigDecimal startingBalance = driver.getBalance().add(grossAmountSpent).add(grossAdditionalExpenses);
+                                          LocalDate date) {
+        BigDecimal addedBalance = updateBalanceRepository
+                .findSumByDriverIdAndOperationAndDate(driver.getId(), "add", date);
+        BigDecimal subtractedBalance = updateBalanceRepository
+                .findSumByDriverIdAndOperationAndDate(driver.getId(), "subtract", date);
 
-        if (updateBalanceSum.compareTo(BigDecimal.ZERO) > 0) {
-            startingBalance = startingBalance.subtract(updateBalanceSum);
-        } else if (updateBalanceSum.compareTo(BigDecimal.ZERO) < 0) {
-            startingBalance = startingBalance.add(updateBalanceSum.abs());
-        }
+        BigDecimal netBalanceModification = (addedBalance != null ? addedBalance : BigDecimal.ZERO)
+                .subtract(subtractedBalance != null ? subtractedBalance : BigDecimal.ZERO);
 
-        return startingBalance;
+        return driver.getBalance()
+                .add(grossAmountSpent)
+                .add(grossAdditionalExpenses)
+                .subtract(netBalanceModification);
     }
 }

@@ -12,6 +12,9 @@ public interface UpdateBalanceRepository extends JpaRepository<UpdateBalance, In
 
     @Query("SELECT COALESCE(SUM(ub.modificationAmount), 0) " +
             "FROM UpdateBalance ub " +
-            "WHERE ub.driver.id = :driverId AND ub.modificationDate = :date")
-    BigDecimal findSumByDriverIdAndModificationDate(@Param("driverId") int driverId, @Param("date") LocalDate date);
+            "WHERE ub.driver.id = :driverId AND ub.operation = :operation AND ub.modificationDate = :date")
+    BigDecimal findSumByDriverIdAndOperationAndDate(
+            @Param("driverId") int driverId,
+            @Param("operation") String operation,
+            @Param("date") LocalDate date);
 }

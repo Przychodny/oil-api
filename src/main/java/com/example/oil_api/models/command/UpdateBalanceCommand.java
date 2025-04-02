@@ -13,6 +13,5 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class UpdateBalanceCommand {
 
-    private Integer driverId;
     private BigDecimal balance;
 }

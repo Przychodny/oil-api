@@ -25,10 +25,12 @@ dodatkowe wydatki
 - Admin ma możliwość dodać do systemu samochód i przypisać go do kierowcy
 - może modyfikować saldo kierowcy 
 
+- walidacja salda kierowcy (nie może wykonać odbioru/dodatkowego wydatku jeśli wydatek jest wyższy
+  niż dostępne środki)
+
 ######################################################################################
 
-- walidacja salda kierowcy (nie może wykonać odbioru/dodatkowego wydatku jeśli wydatek jest wyższy 
-niż dostępne środki)
+
 - po wygenerowaniu rejestru jest on automatycznie wysyłany na jakiegoś maila
 - admin ma wgląd do wszystkich rejestrów, wydatków, odbiorów i dokumentow kierowców 
 - admin ma możliwość edytowania dowolnych parametrów odbiorów, wydatków i rejetrów 
@@ -47,3 +49,4 @@ i za jaka cene netto za sztuke. Wygenerowana faktura ma date, dane klienta, jaki
 gotowka czy przelew. Jesli przelew to wymagana jest informacja o dacie przelewu.
 - admin moze przesunac towar z glownego magazynu stan na magazyn kierowcy lub po prostu modyfikowac jego ilosc
   (np. jesli towar bedzie uszkodzony i trzeba zdjac ze stanu) 
+- sortowanie i filtrowanie odbiorów po różnych parametrach
