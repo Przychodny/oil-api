@@ -30,7 +30,6 @@ dodatkowe wydatki
 
 ######################################################################################
 
-
 - po wygenerowaniu rejestru jest on automatycznie wysyłany na jakiegoś maila
 - admin ma wgląd do wszystkich rejestrów, wydatków, odbiorów i dokumentow kierowców 
 - admin ma możliwość edytowania dowolnych parametrów odbiorów, wydatków i rejetrów 

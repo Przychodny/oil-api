@@ -3,6 +3,7 @@ package com.example.oil_api.services;
 import com.example.oil_api.mappers.DailyRegisterMapper;
 import com.example.oil_api.models.command.CreateDailyRegisterCommand;
 import com.example.oil_api.models.dto.DailyRegisterDto;
+import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.entities.DailyRegister;
 import com.example.oil_api.models.entities.Driver;
 import com.example.oil_api.models.entities.Expense;
@@ -12,6 +13,8 @@ import com.example.oil_api.repositories.DriverRepository;
 import com.example.oil_api.repositories.UpdateBalanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,7 +86,17 @@ public class DailyRegisterService {
                 .orElseThrow(() -> new EntityNotFoundException("Register not found"));
     }
 
-    @Transactional(readOnly = true)
+    public Page<DailyRegisterDto> getAllByDriver(int driverId, Pageable pageable) {
+        return dailyRegisterRepository.findAllByDriver(driverId, pageable)
+                .map(dailyRegisterMapper::mapToDto);
+    }
+
+    public Page<DailyRegisterDto> getAll(Pageable pageable) {
+        return dailyRegisterRepository.findAll(pageable)
+                .map(dailyRegisterMapper::mapToDto);
+    }
+
+    @Transactional
     public void deleteById(int id) {
         dailyRegisterRepository.deleteById(id);
     }

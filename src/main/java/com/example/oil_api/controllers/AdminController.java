@@ -38,9 +38,19 @@ public class AdminController {
         return pickupService.getAll(pageable);
     }
 
-    @GetMapping("/pickups/{id}")
-    public Page<PickupDto> getAllPickupsByDriver(@PathVariable int id, Pageable pageable) {
-        return pickupService.getAllByDriver(id, pageable);
+    @GetMapping("/pickups/{driverId}")
+    public Page<PickupDto> getAllPickupsByDriver(@PathVariable int driverId, Pageable pageable) {
+        return pickupService.getAllByDriver(driverId, pageable);
+    }
+
+    @GetMapping("/dailyRegistrations")
+    public Page<PickupDto> getAllDailyRegistrations(Pageable pageable) {
+        return pickupService.getAll(pageable);
+    }
+
+    @GetMapping("/dailyRegistrations/{driverId}")
+    public Page<PickupDto> getAllDailyRegistrationsByDriver(@PathVariable int driverId, Pageable pageable) {
+        return pickupService.getAllByDriver(driverId, pageable);
     }
 
     @GetMapping("/clients")

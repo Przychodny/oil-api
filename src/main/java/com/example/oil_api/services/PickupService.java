@@ -9,6 +9,7 @@ import com.example.oil_api.models.entities.Invoice;
 import com.example.oil_api.models.entities.Pickup;
 import com.example.oil_api.models.entities.WasteTransferCard;
 import com.example.oil_api.repositories.ClientRepository;
+import com.example.oil_api.repositories.DriverRepository;
 import com.example.oil_api.repositories.PickupRepository;
 import com.example.oil_api.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +32,7 @@ public class PickupService {
     private final ClientRepository clientRepository;
     private final PickupMapper pickupMapper;
     private final DocumentGenerationService documentGenerationService;
+    private final DriverRepository driverRepository;
 
 
     @Transactional
@@ -65,6 +67,8 @@ public class PickupService {
 
         pickup.setInvoice(invoice);
         pickup.setWasteTransferCard(wasteCard);
+
+        driverRepository.save(driver);
 
         return pickupMapper.mapToDto(pickupRepository.save(pickup));
     }
