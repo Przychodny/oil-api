@@ -1,8 +1,12 @@
 package com.example.oil_api.services;
 
+import com.example.oil_api.mappers.InvoiceMapper;
 import com.example.oil_api.mappers.PickupMapper;
+import com.example.oil_api.mappers.WasteTransferCardMapper;
 import com.example.oil_api.models.command.CreatePickupCommand;
+import com.example.oil_api.models.dto.InvoiceDto;
 import com.example.oil_api.models.dto.PickupDto;
+import com.example.oil_api.models.dto.WasteTransferCardDto;
 import com.example.oil_api.models.entities.Client;
 import com.example.oil_api.models.entities.Driver;
 import com.example.oil_api.models.entities.Invoice;
@@ -33,6 +37,8 @@ public class PickupService {
     private final PickupMapper pickupMapper;
     private final DocumentGenerationService documentGenerationService;
     private final DriverRepository driverRepository;
+    private final InvoiceMapper invoiceMapper;
+    private final WasteTransferCardMapper wasteTransferCardMapper;
 
 
     @Transactional
@@ -81,5 +87,21 @@ public class PickupService {
     public Page<PickupDto> getAll(Pageable pageable) {
         return pickupRepository.findAll(pageable)
                 .map(pickupMapper::mapToDto);
+    }
+
+    @Transactional(readOnly = true)
+    public InvoiceDto getInvoiceByPickupId(int pickupId) {
+        Pickup pickup = pickupRepository.findById(pickupId)
+                .orElseThrow(() -> new EntityNotFoundException("Pickup not found"));
+
+        return invoiceMapper.mapToDto(pickup.getInvoice());
+    }
+
+    @Transactional(readOnly = true)
+    public WasteTransferCardDto getWasteCardByPickupId(int pickupId) {
+        Pickup pickup = pickupRepository.findById(pickupId)
+                .orElseThrow(() -> new EntityNotFoundException("Pickup not found"));
+
+        return wasteTransferCardMapper.mapToDto(pickup.getWasteTransferCard());
     }
 }

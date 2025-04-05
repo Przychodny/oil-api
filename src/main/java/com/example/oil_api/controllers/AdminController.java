@@ -6,8 +6,10 @@ import com.example.oil_api.models.command.UpdateBalanceCommand;
 import com.example.oil_api.models.dto.CarDto;
 import com.example.oil_api.models.dto.ClientDto;
 import com.example.oil_api.models.dto.DailyRegisterDto;
+import com.example.oil_api.models.dto.InvoiceDto;
 import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.dto.UpdateBalanceDto;
+import com.example.oil_api.models.dto.WasteTransferCardDto;
 import com.example.oil_api.services.CarService;
 import com.example.oil_api.services.ClientService;
 import com.example.oil_api.services.DailyRegisterService;
@@ -34,6 +36,7 @@ public class AdminController {
     private final CarService carService;
     private final UpdateBalanceService balanceModificationService;
     private final DailyRegisterService dailyRegisterService;
+    private final UpdateBalanceService updateBalanceService;
 
 
     @GetMapping("/pickups")
@@ -46,14 +49,34 @@ public class AdminController {
         return pickupService.getAllByDriver(driverId, pageable);
     }
 
-    @GetMapping("/dailyRegistrations")
+    @GetMapping("/pickups/{pickupId}/invoice")
+    public InvoiceDto getInvoiceByPickup(@PathVariable int pickupId) {
+        return pickupService.getInvoiceByPickupId(pickupId);
+    }
+
+    @GetMapping("/pickups/{pickupId}/wasteCard")
+    public WasteTransferCardDto getWasteCardByPickup(@PathVariable int pickupId) {
+        return pickupService.getWasteCardByPickupId(pickupId);
+    }
+
+    @GetMapping("/register")
     public Page<DailyRegisterDto> getAllDailyRegistrations(Pageable pageable) {
         return dailyRegisterService.getAll(pageable);
     }
 
-    @GetMapping("/dailyRegistrations/{driverId}")
+    @GetMapping("/register/{driverId}")
     public Page<DailyRegisterDto> getAllDailyRegistrationsByDriver(@PathVariable int driverId, Pageable pageable) {
         return dailyRegisterService.getAllByDriver(driverId, pageable);
+    }
+
+    @GetMapping("/updateBalance")
+    public Page<UpdateBalanceDto> getAll(Pageable pageable) {
+        return updateBalanceService.getAll(pageable);
+    }
+
+    @GetMapping("UpdateBalance/{driverId}")
+    public Page<UpdateBalanceDto> getAllByDriver(@PathVariable int driverId, Pageable pageable) {
+        return updateBalanceService.getAllByDriver(driverId, pageable);
     }
 
     @GetMapping("/clients")

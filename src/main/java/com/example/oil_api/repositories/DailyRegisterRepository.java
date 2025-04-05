@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DailyRegisterRepository extends JpaRepository<DailyRegister, Integer> {
 
-    Page<DailyRegister> findAllByDriver(Integer driverId, Pageable pageable);
+    Page<DailyRegister> findAllByDriverId(int driverId, Pageable pageable);
 }

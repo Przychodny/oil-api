@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class WasteTransferCardDto {
     private Integer id;
     private Integer clientId;
     private String number;
-    private LocalDateTime localDateTime;
+    private LocalDate date;
     private BigDecimal weightMg;
     private String driverCarRegistration;
 }
