@@ -2,7 +2,7 @@ package com.example.oil_api.services;
 
 import com.example.oil_api.mappers.CarMapper;
 import com.example.oil_api.models.command.AssignCarToDriverCommand;
-import com.example.oil_api.models.command.CreateCarCommand;
+import com.example.oil_api.models.command.create.CreateCarCommand;
 import com.example.oil_api.models.dto.CarDto;
 import com.example.oil_api.models.entities.Car;
 import com.example.oil_api.models.entities.Driver;

@@ -3,7 +3,7 @@ package com.example.oil_api.services;
 import com.example.oil_api.mappers.InvoiceMapper;
 import com.example.oil_api.mappers.PickupMapper;
 import com.example.oil_api.mappers.WasteTransferCardMapper;
-import com.example.oil_api.models.command.CreatePickupCommand;
+import com.example.oil_api.models.command.create.CreatePickupCommand;
 import com.example.oil_api.models.dto.InvoiceDto;
 import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.dto.WasteTransferCardDto;

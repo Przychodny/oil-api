@@ -1,6 +1,6 @@
 package com.example.oil_api.controllers;
 
-import com.example.oil_api.models.command.CreateClientCommand;
+import com.example.oil_api.models.command.create.CreateClientCommand;
 import com.example.oil_api.models.dto.ClientDto;
 import com.example.oil_api.services.ClientService;
 import lombok.RequiredArgsConstructor;

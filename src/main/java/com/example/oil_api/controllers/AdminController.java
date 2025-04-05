@@ -1,7 +1,7 @@
 package com.example.oil_api.controllers;
 
 import com.example.oil_api.models.command.AssignCarToDriverCommand;
-import com.example.oil_api.models.command.CreateCarCommand;
+import com.example.oil_api.models.command.create.CreateCarCommand;
 import com.example.oil_api.models.command.update.UpdateBalanceCommand;
 import com.example.oil_api.models.dto.CarDto;
 import com.example.oil_api.models.dto.ClientDto;

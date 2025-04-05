@@ -1,7 +1,7 @@
 package com.example.oil_api.services;
 
 import com.example.oil_api.mappers.DailyRegisterMapper;
-import com.example.oil_api.models.command.CreateDailyRegisterCommand;
+import com.example.oil_api.models.command.create.CreateDailyRegisterCommand;
 import com.example.oil_api.models.dto.DailyRegisterDto;
 import com.example.oil_api.models.entities.DailyRegister;
 import com.example.oil_api.models.entities.Driver;

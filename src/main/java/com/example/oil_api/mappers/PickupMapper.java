@@ -1,6 +1,6 @@
 package com.example.oil_api.mappers;
 
-import com.example.oil_api.models.command.CreatePickupCommand;
+import com.example.oil_api.models.command.create.CreatePickupCommand;
 import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.entities.Pickup;
 import org.mapstruct.Mapper;

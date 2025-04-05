@@ -1,6 +1,6 @@
 package com.example.oil_api.mappers;
 
-import com.example.oil_api.models.command.CreateClientCommand;
+import com.example.oil_api.models.command.create.CreateClientCommand;
 import com.example.oil_api.models.dto.ClientDto;
 import com.example.oil_api.models.entities.Client;
 import org.mapstruct.Mapper;

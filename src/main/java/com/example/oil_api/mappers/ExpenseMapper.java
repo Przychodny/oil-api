@@ -1,6 +1,6 @@
 package com.example.oil_api.mappers;
 
-import com.example.oil_api.models.command.CreateExpenseCommand;
+import com.example.oil_api.models.command.create.CreateExpenseCommand;
 import com.example.oil_api.models.dto.ExpenseDto;
 import com.example.oil_api.models.entities.Expense;
 import org.mapstruct.Mapper;

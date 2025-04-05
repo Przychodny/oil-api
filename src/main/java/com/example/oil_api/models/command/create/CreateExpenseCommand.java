@@ -1,4 +1,4 @@
-package com.example.oil_api.models.command;
+package com.example.oil_api.models.command.create;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

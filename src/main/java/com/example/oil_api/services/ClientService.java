@@ -2,7 +2,7 @@ package com.example.oil_api.services;
 
 import com.example.oil_api.client.OrgClient;
 import com.example.oil_api.mappers.ClientMapper;
-import com.example.oil_api.models.command.CreateClientCommand;
+import com.example.oil_api.models.command.create.CreateClientCommand;
 import com.example.oil_api.models.dto.ClientDto;
 import com.example.oil_api.models.dto.OrgClientDto;
 import com.example.oil_api.models.entities.Client;
