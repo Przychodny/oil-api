@@ -1,7 +1,7 @@
 package com.example.oil_api.services;
 
 import com.example.oil_api.mappers.UpdateBalanceMapper;
-import com.example.oil_api.models.command.UpdateBalanceCommand;
+import com.example.oil_api.models.command.update.UpdateBalanceCommand;
 import com.example.oil_api.models.dto.UpdateBalanceDto;
 import com.example.oil_api.models.entities.Driver;
 import com.example.oil_api.models.entities.UpdateBalance;

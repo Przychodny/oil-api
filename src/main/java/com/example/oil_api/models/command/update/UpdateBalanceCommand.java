@@ -1,4 +1,4 @@
-package com.example.oil_api.models.command;
+package com.example.oil_api.models.command.update;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
