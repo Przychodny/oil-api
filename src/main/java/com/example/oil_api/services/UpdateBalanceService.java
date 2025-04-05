@@ -9,6 +9,8 @@ import com.example.oil_api.repositories.DriverRepository;
 import com.example.oil_api.repositories.UpdateBalanceRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -22,6 +24,18 @@ public class UpdateBalanceService {
     private final DriverRepository driverRepository;
     private final UpdateBalanceRepository updateBalanceRepository;
     private final UpdateBalanceMapper updateBalanceMapper;
+
+    public Page<UpdateBalanceDto> getAll(Pageable pageable) {
+        return updateBalanceRepository.findAll(pageable)
+                .map(updateBalanceMapper::mapToDto);
+    }
+
+    public Page<UpdateBalanceDto> getAllByDriver(int driverId, Pageable pageable) {
+        return updateBalanceRepository.findAllByDriver(driverId, pageable)
+                .map(updateBalanceMapper::mapToDto);
+    }
+
+
 
     public UpdateBalanceDto addToBalanceForDriver(int driverId, UpdateBalanceCommand command) {
         String add = "add";

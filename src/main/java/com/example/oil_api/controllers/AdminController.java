@@ -5,10 +5,12 @@ import com.example.oil_api.models.command.CreateCarCommand;
 import com.example.oil_api.models.command.UpdateBalanceCommand;
 import com.example.oil_api.models.dto.CarDto;
 import com.example.oil_api.models.dto.ClientDto;
+import com.example.oil_api.models.dto.DailyRegisterDto;
 import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.dto.UpdateBalanceDto;
 import com.example.oil_api.services.CarService;
 import com.example.oil_api.services.ClientService;
+import com.example.oil_api.services.DailyRegisterService;
 import com.example.oil_api.services.PickupService;
 import com.example.oil_api.services.UpdateBalanceService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class AdminController {
     private final ClientService clientService;
     private final CarService carService;
     private final UpdateBalanceService balanceModificationService;
+    private final DailyRegisterService dailyRegisterService;
 
 
     @GetMapping("/pickups")
@@ -44,13 +47,13 @@ public class AdminController {
     }
 
     @GetMapping("/dailyRegistrations")
-    public Page<PickupDto> getAllDailyRegistrations(Pageable pageable) {
-        return pickupService.getAll(pageable);
+    public Page<DailyRegisterDto> getAllDailyRegistrations(Pageable pageable) {
+        return dailyRegisterService.getAll(pageable);
     }
 
     @GetMapping("/dailyRegistrations/{driverId}")
-    public Page<PickupDto> getAllDailyRegistrationsByDriver(@PathVariable int driverId, Pageable pageable) {
-        return pickupService.getAllByDriver(driverId, pageable);
+    public Page<DailyRegisterDto> getAllDailyRegistrationsByDriver(@PathVariable int driverId, Pageable pageable) {
+        return dailyRegisterService.getAllByDriver(driverId, pageable);
     }
 
     @GetMapping("/clients")

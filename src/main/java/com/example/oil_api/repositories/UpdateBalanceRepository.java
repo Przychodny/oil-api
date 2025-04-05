@@ -1,6 +1,8 @@
 package com.example.oil_api.repositories;
 
 import com.example.oil_api.models.entities.UpdateBalance;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +19,6 @@ public interface UpdateBalanceRepository extends JpaRepository<UpdateBalance, In
             @Param("driverId") int driverId,
             @Param("operation") String operation,
             @Param("date") LocalDate date);
+
+    Page<UpdateBalance> findAllByDriver(int driverId, Pageable pageable);
 }
