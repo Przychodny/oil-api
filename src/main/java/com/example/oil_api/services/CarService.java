@@ -20,12 +20,6 @@ public class CarService {
     private final CarMapper carMapper;
     private final UserRepository userRepository;
 
-    public CarDto findById(int id) {
-        return carRepository.findById(id)
-                .map(carMapper::mapToDto)
-                .orElseThrow(() -> new EntityNotFoundException("Car not Found"));
-    }
-
     public CarDto create(CreateCarCommand command) {
         Car car = carMapper.mapFromCommand(command);
         car.setBrand(command.getBrand());
