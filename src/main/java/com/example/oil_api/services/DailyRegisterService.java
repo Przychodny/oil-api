@@ -36,7 +36,7 @@ public class DailyRegisterService {
         Driver driver = driverRepository.findById(driverId)
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
-        Set<Pickup> dailyPickups = driver.getPickups().stream()
+        Set<Pickup> dailyPickups = driver.getPickups().stream() //METODY!!!! z uzyciem typow generycznych jesli trzeba
                 .filter(p -> p.getPickupTime() != null && p.getPickupTime().toLocalDate().equals(command.getLocalDate()))
                 .collect(Collectors.toSet());
 
@@ -44,7 +44,7 @@ public class DailyRegisterService {
                 .filter(e -> e.getLocalDateTime() != null && e.getLocalDateTime().toLocalDate().equals(command.getLocalDate()))
                 .collect(Collectors.toSet());
 
-        BigDecimal grossAmountSpent = dailyPickups.stream()
+        BigDecimal grossAmountSpent = dailyPickups.stream() //METODY!!!! z uzyciem typow generycznych
                 .map(Pickup::getGrossTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -65,7 +65,7 @@ public class DailyRegisterService {
 
         DailyRegister register = dailyRegisterMapper.mapFromCommand(command);
         register.setDriver(driver);
-        register.setPickups(dailyPickups);
+        register.setPickups(dailyPickups); //nie no co za mapper ktory nie mapuje? :D
         register.setExpenses(dailyExpenses);
         register.setGrossAmountSpent(grossAmountSpent);
         register.setTotalOilCollected(totalOilCollected);

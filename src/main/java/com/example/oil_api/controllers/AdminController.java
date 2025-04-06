@@ -30,14 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/admin")
 public class AdminController {
-
+//imo paczka admin i kontrollery - klania sie zasada "S" z SOLID - single responsibility
     private final PickupService pickupService;
     private final ClientService clientService;
     private final CarService carService;
     private final UpdateBalanceService balanceModificationService;
     private final DailyRegisterService dailyRegisterService;
     private final UpdateBalanceService updateBalanceService;
-
 
     @GetMapping("/pickups")
     public Page<PickupDto> getAllPickups(Pageable pageable) {
@@ -74,7 +73,7 @@ public class AdminController {
         return updateBalanceService.getAll(pageable);
     }
 
-    @GetMapping("UpdateBalance/{driverId}")
+    @GetMapping("updateBalance/{driverId}")
     public Page<UpdateBalanceDto> getAllByDriver(@PathVariable int driverId, Pageable pageable) {
         return updateBalanceService.getAllByDriver(driverId, pageable);
     }

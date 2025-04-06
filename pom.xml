@@ -14,6 +14,7 @@
 	<name>oil-api</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
+<!--	po co licences, developers, scm?-->
 	<licenses>
 		<license/>
 	</licenses>
@@ -30,6 +31,7 @@
 		<java.version>17</java.version>
 	</properties>
 
+<!--	po co wymuszasz przez dependencyManagement wersje?-->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

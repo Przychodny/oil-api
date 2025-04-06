@@ -18,7 +18,7 @@ public class OrgClientDto {
 
     @Getter
     @Setter
-    @Builder
+    @Builder //po co dajesz te wszystkie adnotacje skoro ich nie uzywasz?
     @NoArgsConstructor
     @AllArgsConstructor
     public static class NameDto {
@@ -31,7 +31,7 @@ public class OrgClientDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class AddressDto {
-        private String kod;
+        private String kod; //imo ja bym zachowal angielskie nazwy i uzyl @JsonProperty
         private String miejscowosc;
         private String nr_domu;
         private String ulica;

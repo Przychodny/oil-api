@@ -19,6 +19,5 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = UserMapper.toUserEntity(request, encodedPassword);
         return userRepository.save(user);
-
     }
 }

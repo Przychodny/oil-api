@@ -31,7 +31,7 @@ public class Driver extends User {
 
     private BigDecimal balance = BigDecimal.ZERO;
 
-    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY) //lazy nie jest przypadkiem domyslnym?
     private Set<Pickup> pickups;
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)

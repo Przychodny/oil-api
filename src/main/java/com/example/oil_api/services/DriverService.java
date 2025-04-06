@@ -15,7 +15,6 @@ public class DriverService {
     private final DriverRepository driverRepository;
     private final DriverMapper driverMapper;
 
-
     @Transactional(readOnly = true)
     public DriverDto getById(int id) {
         return driverRepository.findById(id)

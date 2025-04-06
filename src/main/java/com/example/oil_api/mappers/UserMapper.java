@@ -9,7 +9,7 @@ import com.example.oil_api.models.entities.User;
 
 import java.math.BigDecimal;
 
-public class UserMapper {
+public class UserMapper { //konsekwencja - mapstruct. chyba, ze nie ma wyjscia, ale tutaj mozna mapstructem, jesli juz uzywasz mapstructa
 
     public static UserDto toDto(User user) {
         if (user == null) {
@@ -28,8 +28,9 @@ public class UserMapper {
         }
 
         Role role = request.getRole();
-        if (role == Role.DRIVER) {
-            return Driver.builder()
+        if (role == Role.DRIVER) { //ifologia sie zrobi, jesli bedzie wiecej rol.
+            // Albo fabryka albo mapa<Role, BiFunction<RegisterRequest, String, User>
+            return Driver.builder()//metoda
                     .username(request.getUsername())
                     .password(encodedPassword)
                     .firstName(request.getFirstName())

@@ -24,7 +24,8 @@ public class ExpenseService {
     private final DriverRepository driverRepository;
 
     public ExpenseDto add(int driverId, CreateExpenseCommand command) {
-        Driver driver = driverRepository.findById(driverId)
+        Driver driver = driverRepository.findById(driverId) //czemu raz driver jest wyciagany z repozytorium user, a tutaj sie okazuje
+                //ze ma wlasne repo? Oczywiscie najlepiej aby mial wlasne
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
         BigDecimal gross = command.getGrossAmount();

@@ -31,6 +31,6 @@ public class UpdateBalance {
     private Driver driver;
 
     private BigDecimal modificationAmount;
-    private String operation;
+    private String operation; //z tego co widze to to tez powininen być enum
     private LocalDate modificationDate;
 }

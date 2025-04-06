@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -42,6 +42,8 @@ public class DocumentGenerationService {
 
     public WasteTransferCard createWasteCard(Driver driver, Client client, Pickup pickup) {
         WasteTransferCard wasteTransferCard = new WasteTransferCard();
+        //czemu Ty uzywasz wszedzie bezargumentowego konstruktora i potem przez settery wszystko ustawiasz?
+        //tak sie nie robi, przynajmniej ja sie nie spotkalem
 
         BigDecimal weight = pickup.getKg().multiply(new BigDecimal("0.001")).setScale(3, RoundingMode.HALF_UP);
         wasteTransferCard.setClient(client);
@@ -65,7 +67,7 @@ public class DocumentGenerationService {
         Driver driver = (Driver) userRepository.findById(driverId)
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
-        String firstLetter = String.valueOf(driver.getFirstName().toUpperCase().charAt(0));
+        String firstLetter = String.valueOf(driver.getFirstName().toUpperCase().charAt(0)); //metoda
         String lastLetter = String.valueOf(driver.getLastName().toUpperCase().charAt(0));
         String numberOfInvoice = String.valueOf(driver.getPickups().size() + 1);
         String year = String.valueOf(LocalDateTime.now().getYear());
@@ -74,6 +76,8 @@ public class DocumentGenerationService {
             return firstLetter + lastLetter + "/" + numberOfInvoice + "/" + year;
         }
 
-        return firstLetter + lastLetter + "/" + numberOfInvoice + "/" + extraSegment + year;
+        return firstLetter + lastLetter + "/" + numberOfInvoice + "/" + extraSegment + year; //musisz byc konsekwentny w projekcie
+        //albo uzywasz string format albo uzywasz z plusami. Inaczej wyglada jakbys mial dwubiegunowke
+        //z doswiadczenia powiem, ze uzywaj string format/formatted
     }
 }

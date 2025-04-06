@@ -94,7 +94,13 @@ public class PickupService {
         Pickup pickup = pickupRepository.findById(pickupId)
                 .orElseThrow(() -> new EntityNotFoundException("Pickup not found"));
 
-        return invoiceMapper.mapToDto(pickup.getInvoice());
+        return invoiceMapper.mapToDto(pickup.getInvoice()); //co kto lubi, ale ja bym to wrzucil w .map() powyżej i od razu zwracał jak poniżej
+        /*
+        return pickupRepository.findById(pickupId)
+                .map(Pickup::getInvoice)
+                .map(invoiceMapper::mapToDto)
+                .orElseThrow(() -> new EntityNotFoundException("Pickup not found"));
+         */
     }
 
     @Transactional(readOnly = true)

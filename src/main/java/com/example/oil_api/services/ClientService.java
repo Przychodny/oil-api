@@ -26,7 +26,7 @@ public class ClientService {
 
         OrgClientDto orgDto = orgClient.getOrganizationData(externalId);
 
-        Client client = new Client();
+        Client client = new Client(); //mapper
         client.setNip(nip);
         client.setName(orgDto.getNazwy().getPelna());
         client.setAddress(formatAddress(orgDto.getAdres()));
@@ -37,7 +37,7 @@ public class ClientService {
 
     public ClientDto create(CreateClientCommand command) {
         Client client = clientMapper.mapFromCommand(command);
-        client.setNip(command.getNip());
+        client.setNip(command.getNip()); //to to juz wiesz, nie bede pisal komentarzy powtarzajacych sie jak cos
         client.setName(command.getName());
         client.setAddress(command.getAddress());
         return clientMapper.mapToDto(clientRepository.save(client));
@@ -54,7 +54,7 @@ public class ClientService {
                 .map(clientMapper::mapToDto);
     }
 
-    public Slice<ClientDto> getAllSlice(Pageable pageable) {
+    public Slice<ClientDto> getAllSlice(Pageable pageable) { //nieuzywana, do wywalenie
         return clientRepository.findAll(pageable)
                 .map(clientMapper::mapToDto);
     }
@@ -65,7 +65,7 @@ public class ClientService {
 
     private String formatAddress(OrgClientDto.AddressDto address) {
         return String.format("%s %s, %s %s",
-                        address.getUlica() != null ? address.getUlica() : "",
+                        address.getUlica() != null ? address.getUlica() : "", //skoro wszedzie jest tak samo to jedna metoda i optionale
                         address.getNr_domu() != null ? address.getNr_domu() : "",
                         address.getKod() != null ? address.getKod() : "",
                         address.getMiejscowosc() != null ? address.getMiejscowosc() : "")

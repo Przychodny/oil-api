@@ -19,7 +19,7 @@ public class AuthController {
 
     private final UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/register") //to jest endpoint po prostu create, wiec nie powinno byc "register"
     public ResponseEntity<UserDto> registerUser(@RequestBody RegisterRequest request) {
         User user = userService.registerUser(request);
         UserDto userDto = UserMapper.toDto(user);

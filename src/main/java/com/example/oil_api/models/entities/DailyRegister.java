@@ -42,7 +42,7 @@ public class DailyRegister {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_register_id")
-    @Builder.Default
+    @Builder.Default //po co skoro tego nie uzywasz?
     private Set<Pickup> pickups = new HashSet<>();
 
     private BigDecimal startingBalance;

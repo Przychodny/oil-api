@@ -36,9 +36,9 @@ public class UpdateBalanceService {
     }
 
 
-
+//usuwamy za duza ilosc linii
     public UpdateBalanceDto addToBalanceForDriver(int driverId, UpdateBalanceCommand command) {
-        String add = "add";
+        String add = "add"; //zmienna statyczna + od razu w metodzie to można wrzucić
         return updateBalanceForDriver(driverId, add, command, BigDecimal::add);
     }
 
