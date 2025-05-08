@@ -17,6 +17,6 @@ public class UpdateBalanceDto {
     private Integer id;
     private Integer driverId;
     private BigDecimal modificationAmount;
-    private String operation;
+    private String modifier;
     private LocalDate modificationDate;
 }

@@ -9,8 +9,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<User> findWithLockingById(int id);
-
     Optional<User> findByUsername(String username);
 }

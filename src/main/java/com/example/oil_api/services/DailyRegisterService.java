@@ -1,5 +1,6 @@
 package com.example.oil_api.services;
 
+import com.example.oil_api.common.BalanceModifier;
 import com.example.oil_api.mappers.DailyRegisterMapper;
 import com.example.oil_api.models.command.create.CreateDailyRegisterCommand;
 import com.example.oil_api.models.dto.DailyRegisterDto;
@@ -19,7 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,43 +41,28 @@ public class DailyRegisterService {
         Driver driver = driverRepository.findById(driverId)
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
-        Set<Pickup> dailyPickups = driver.getPickups().stream()
-                .filter(p -> p.getPickupTime() != null && p.getPickupTime().toLocalDate().equals(command.getLocalDate()))
-                .collect(Collectors.toSet());
+        Set<Pickup> dailyPickups = filterByDate(driver.getPickups(), Pickup::getPickupTime, command.getDate());
+        Set<Expense> dailyExpenses = filterByDate(driver.getExpenses(), Expense::getLocalDateTime, command.getDate());
 
-        Set<Expense> dailyExpenses = driver.getExpenses().stream()
-                .filter(e -> e.getLocalDateTime() != null && e.getLocalDateTime().toLocalDate().equals(command.getLocalDate()))
-                .collect(Collectors.toSet());
-
-        BigDecimal grossAmountSpent = dailyPickups.stream()
-                .map(Pickup::getGrossTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal totalOilCollected = dailyPickups.stream()
-                .map(Pickup::getKg)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal netAdditionalExpenses = dailyExpenses.stream()
-                .map(Expense::getNetAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal grossAdditionalExpenses = dailyExpenses.stream()
-                .map(Expense::getGrossAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal grossAmountSpent = getTotal(dailyPickups, Pickup::getGrossTotal);
+        BigDecimal totalOilCollected = getTotal(dailyPickups, Pickup::getKg);
+        BigDecimal netAdditionalExpenses = getTotal(dailyExpenses, Expense::getNetAmount);
+        BigDecimal grossAdditionalExpenses = getTotal(dailyExpenses, Expense::getGrossAmount);
 
         BigDecimal finalBalance = driver.getBalance();
-        BigDecimal startingBalance = getStartingBalance(driver, grossAmountSpent, grossAdditionalExpenses, command.getLocalDate());
+        BigDecimal startingBalance = getStartingBalance(driver, grossAmountSpent, grossAdditionalExpenses, command.getDate());
 
-        DailyRegister register = dailyRegisterMapper.mapFromCommand(command);
-        register.setDriver(driver);
-        register.setPickups(dailyPickups);
-        register.setExpenses(dailyExpenses);
-        register.setGrossAmountSpent(grossAmountSpent);
-        register.setTotalOilCollected(totalOilCollected);
-        register.setNetAdditionalExpenses(netAdditionalExpenses);
-        register.setStartingBalance(startingBalance);
-        register.setFinalBalance(finalBalance);
-        register.setDate(command.getLocalDate());
+        DailyRegister register = dailyRegisterMapper.mapFromCommand(
+                command,
+                driver,
+                dailyPickups,
+                dailyExpenses,
+                grossAmountSpent,
+                totalOilCollected,
+                netAdditionalExpenses,
+                startingBalance,
+                finalBalance
+        );
 
         DailyRegister savedRegister = dailyRegisterRepository.save(register);
         return dailyRegisterMapper.mapToDto(savedRegister);
@@ -105,9 +95,9 @@ public class DailyRegisterService {
     private BigDecimal getStartingBalance(Driver driver, BigDecimal grossAmountSpent, BigDecimal grossAdditionalExpenses,
                                           LocalDate date) {
         BigDecimal addedBalance = updateBalanceRepository
-                .findSumByDriverIdAndOperationAndDate(driver.getId(), "add", date);
+                .findSumByDriverIdAndOperationAndDate(driver.getId(), BalanceModifier.ADD, date);
         BigDecimal subtractedBalance = updateBalanceRepository
-                .findSumByDriverIdAndOperationAndDate(driver.getId(), "subtract", date);
+                .findSumByDriverIdAndOperationAndDate(driver.getId(), BalanceModifier.SUBTRACT, date);
 
         BigDecimal netBalanceModification = (addedBalance != null ? addedBalance : BigDecimal.ZERO)
                 .subtract(subtractedBalance != null ? subtractedBalance : BigDecimal.ZERO);
@@ -116,5 +106,22 @@ public class DailyRegisterService {
                 .add(grossAmountSpent)
                 .add(grossAdditionalExpenses)
                 .subtract(netBalanceModification);
+    }
+
+    private <T> Set<T> filterByDate(Collection<T> items, Function<T, LocalDateTime> dateExtractor, LocalDate localDate) {
+        return items.stream()
+                .filter(item -> {
+                    LocalDateTime itemDate = dateExtractor.apply(item);
+                    return itemDate != null
+                            && itemDate.toLocalDate().equals(localDate);
+                })
+                .collect(Collectors.toSet());
+    }
+
+    private <T> BigDecimal getTotal(Collection<T> items, Function<T, BigDecimal> mapper) {
+        return items.stream()
+                .map(mapper)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

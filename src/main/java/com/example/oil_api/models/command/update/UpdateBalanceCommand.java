@@ -13,5 +13,5 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class UpdateBalanceCommand {
 
-    private BigDecimal balance;
+    private BigDecimal amount;
 }

@@ -15,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="modification_amount" type="DECIMAL(19,2)"/>
-            <column name="operation" type="VARCHAR(255)"/>
+            <column name="modifier" type="VARCHAR(255)"/>
             <column name="modification_date" type="DATE"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="update_balance"

@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,7 +20,6 @@ public class InvoiceDto {
     private Integer clientId;
     private String number;
     private LocalDate date;
-    private LocalDateTime pickupTime;
     private BigDecimal netPricePerKg;
     private BigDecimal kg;
     private BigDecimal netTotal;

@@ -10,7 +10,6 @@ import com.example.oil_api.repositories.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,15 +51,6 @@ public class ClientService {
     public Page<ClientDto> getAll(Pageable pageable) {
         return clientRepository.findAll(pageable)
                 .map(clientMapper::mapToDto);
-    }
-
-    public Slice<ClientDto> getAllSlice(Pageable pageable) {
-        return clientRepository.findAll(pageable)
-                .map(clientMapper::mapToDto);
-    }
-
-    public void deleteById(int clientId) {
-        clientRepository.deleteById(clientId);
     }
 
     private String formatAddress(OrgClientDto.AddressDto address) {

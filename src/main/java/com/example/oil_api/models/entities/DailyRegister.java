@@ -42,16 +42,13 @@ public class DailyRegister {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_register_id")
-    @Builder.Default
     private Set<Pickup> pickups = new HashSet<>();
-
-    private BigDecimal startingBalance;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "daily_register_id")
-    @Builder.Default
     private Set<Expense> expenses = new HashSet<>();
 
+    private BigDecimal startingBalance;
     private BigDecimal grossAmountSpent;
     private BigDecimal totalOilCollected;
     private BigDecimal netAdditionalExpenses;

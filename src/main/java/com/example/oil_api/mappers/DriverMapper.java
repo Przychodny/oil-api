@@ -5,10 +5,9 @@ import com.example.oil_api.models.entities.Driver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = CarMapper.class)
 public interface DriverMapper {
 
-    @Mapping(target = "carDto", source = "car")
-    @Mapping(target = "balance", source = "balance")
+    @Mapping(target = "carId", source = "car.id")
     DriverDto mapToDto(Driver driver);
 }

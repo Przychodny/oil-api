@@ -10,6 +10,7 @@ import com.example.oil_api.models.dto.InvoiceDto;
 import com.example.oil_api.models.dto.PickupDto;
 import com.example.oil_api.models.dto.UpdateBalanceDto;
 import com.example.oil_api.models.dto.WasteTransferCardDto;
+import com.example.oil_api.models.entities.Car;
 import com.example.oil_api.services.CarService;
 import com.example.oil_api.services.ClientService;
 import com.example.oil_api.services.DailyRegisterService;
@@ -101,7 +102,7 @@ public class AdminController {
     }
 
     @PostMapping("/assign")
-    public CarDto assignCarToDriver(@RequestBody AssignCarToDriverCommand command) {
+    public Car assignCarToDriver(@RequestBody AssignCarToDriverCommand command) {
         return carService.assignCarToDriver(command);
     }
 }

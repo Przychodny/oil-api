@@ -1,5 +1,6 @@
 package com.example.oil_api.repositories;
 
+import com.example.oil_api.common.BalanceModifier;
 import com.example.oil_api.models.entities.UpdateBalance;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +15,10 @@ public interface UpdateBalanceRepository extends JpaRepository<UpdateBalance, In
 
     @Query("SELECT COALESCE(SUM(ub.modificationAmount), 0) " +
             "FROM UpdateBalance ub " +
-            "WHERE ub.driver.id = :driverId AND ub.operation = :operation AND ub.modificationDate = :date")
+            "WHERE ub.driver.id = :driverId AND ub.modifier = :modifier AND ub.modificationDate = :date")
     BigDecimal findSumByDriverIdAndOperationAndDate(
             @Param("driverId") int driverId,
-            @Param("operation") String operation,
+            @Param("modifier") BalanceModifier modifier,
             @Param("date") LocalDate date);
 
     Page<UpdateBalance> findAllByDriver(int driverId, Pageable pageable);

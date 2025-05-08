@@ -1,6 +1,9 @@
 package com.example.oil_api.models.entities;
 
+import com.example.oil_api.common.BalanceModifier;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +34,9 @@ public class UpdateBalance {
     private Driver driver;
 
     private BigDecimal modificationAmount;
-    private String operation;
+
+    @Enumerated(EnumType.STRING)
+    private BalanceModifier modifier;
+
     private LocalDate modificationDate;
 }

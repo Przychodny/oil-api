@@ -1,5 +1,6 @@
 package com.example.oil_api.services;
 
+import com.example.oil_api.common.BalanceModifier;
 import com.example.oil_api.mappers.UpdateBalanceMapper;
 import com.example.oil_api.models.command.update.UpdateBalanceCommand;
 import com.example.oil_api.models.dto.UpdateBalanceDto;
@@ -36,31 +37,28 @@ public class UpdateBalanceService {
     }
 
 
-
     public UpdateBalanceDto addToBalanceForDriver(int driverId, UpdateBalanceCommand command) {
-        String add = "add";
-        return updateBalanceForDriver(driverId, add, command, BigDecimal::add);
+        return updateBalanceForDriver(driverId, BalanceModifier.ADD, command, BigDecimal::add);
     }
 
     public UpdateBalanceDto subtractToBalanceForDriver(int driverId, UpdateBalanceCommand command) {
-        String subtract = "subtract";
-        return updateBalanceForDriver(driverId, subtract ,command, BigDecimal::subtract);
+        return updateBalanceForDriver(driverId, BalanceModifier.SUBTRACT, command, BigDecimal::subtract);
     }
 
-    private UpdateBalanceDto updateBalanceForDriver(int driverId, String balanceOperation, UpdateBalanceCommand command,
+    private UpdateBalanceDto updateBalanceForDriver(int driverId, BalanceModifier modifier, UpdateBalanceCommand command,
                                                     BiFunction<BigDecimal, BigDecimal, BigDecimal> operation) {
         Driver driver = driverRepository.findById(driverId)
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
-        BigDecimal newBalance = operation.apply(driver.getBalance(), command.getBalance());
+        BigDecimal newBalance = operation.apply(driver.getBalance(), command.getAmount());
         driver.setBalance(newBalance);
         driverRepository.save(driver);
 
         UpdateBalance updateBalance = updateBalanceMapper.mapFromCommand(command);
         updateBalance.setDriver(driver);
-        updateBalance.setModificationAmount(command.getBalance());
+        updateBalance.setModificationAmount(command.getAmount());
         updateBalance.setModificationDate(LocalDate.now());
-        updateBalance.setOperation(balanceOperation);
+        updateBalance.setModifier(modifier);
 
         return updateBalanceMapper.mapToDto(updateBalanceRepository.save(updateBalance));
     }

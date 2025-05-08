@@ -40,41 +40,30 @@ public class PickupService {
     private final InvoiceMapper invoiceMapper;
     private final WasteTransferCardMapper wasteTransferCardMapper;
 
-
     @Transactional
     public PickupDto create(int driverId, CreatePickupCommand command) {
-        Driver driver = (Driver) userRepository.findWithLockingById(driverId)
+        Driver driver = driverRepository.findWithLockingById(driverId)
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
         Client client = clientRepository.findById(command.getClientId())
                 .orElseThrow(() -> new EntityNotFoundException("Client not found"));
-        Pickup pickup = pickupMapper.mapFromCommand(command);
 
-        BigDecimal netTotal = command.getNetPricePerKg().multiply(command.getKg());
-        BigDecimal vat = netTotal.multiply(new BigDecimal("0.23")).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal netTotal = calculateNetTotal(command);
+        BigDecimal vat = calculateVat(netTotal);
         BigDecimal grossTotal = netTotal.add(vat);
+
+        Pickup pickup = pickupMapper.mapToEntity(command, driver, client, netTotal, vat, grossTotal);
+        pickup.setPickupTime(LocalDateTime.now());
 
         if (driver.getBalance().compareTo(grossTotal) < 0) {
             throw new LayerInstantiationException();
         }
-
         driver.setBalance(driver.getBalance().subtract(grossTotal));
 
-        pickup.setDriver(driver);
-        pickup.setClient(client);
-        pickup.setPickupTime(LocalDateTime.now());
-        pickup.setNetPricePerKg(command.getNetPricePerKg());
-        pickup.setKg(command.getKg());
-        pickup.setNetTotal(netTotal);
-        pickup.setVat(vat);
-        pickup.setGrossTotal(grossTotal);
-
-        Invoice invoice = documentGenerationService.createInvoice(driver, client, pickup);
-        WasteTransferCard wasteCard = documentGenerationService.createWasteCard(driver, client, pickup);
+        Invoice invoice = documentGenerationService.createInvoice(driver, pickup);
+        WasteTransferCard wasteCard = documentGenerationService.createWasteCard(driver, pickup);
 
         pickup.setInvoice(invoice);
         pickup.setWasteTransferCard(wasteCard);
-
-        driverRepository.save(driver);
 
         return pickupMapper.mapToDto(pickupRepository.save(pickup));
     }
@@ -103,5 +92,13 @@ public class PickupService {
                 .orElseThrow(() -> new EntityNotFoundException("Pickup not found"));
 
         return wasteTransferCardMapper.mapToDto(pickup.getWasteTransferCard());
+    }
+
+    private BigDecimal calculateVat(BigDecimal netTotal) {
+        return netTotal.multiply(new BigDecimal("0.23")).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calculateNetTotal(CreatePickupCommand command) {
+        return command.getNetPricePerKg().multiply(command.getKg());
     }
 }

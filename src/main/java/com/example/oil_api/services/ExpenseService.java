@@ -31,11 +31,7 @@ public class ExpenseService {
         BigDecimal vat = calculateVat(gross, command.getVatPercentage());
         BigDecimal net = gross.subtract(vat);
 
-        Expense expense = expenseMapper.mapFromCommand(command);
-        expense.setVatPercentage(vat);
-        expense.setNetAmount(net);
-        expense.setDriver(driver);
-        expense.setLocalDateTime(LocalDateTime.now());
+        Expense expense = expenseMapper.mapFromCommand(command, driver, net, vat, gross);
 
         driver.setBalance(driver.getBalance().subtract(gross));
         driverRepository.save(driver);

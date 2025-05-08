@@ -11,5 +11,5 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CreateDailyRegisterCommand {
 
-    private LocalDate localDate;
+    private LocalDate date;
 }
