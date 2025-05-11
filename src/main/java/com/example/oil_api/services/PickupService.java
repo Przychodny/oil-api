@@ -15,7 +15,6 @@ import com.example.oil_api.models.entities.WasteTransferCard;
 import com.example.oil_api.repositories.ClientRepository;
 import com.example.oil_api.repositories.DriverRepository;
 import com.example.oil_api.repositories.PickupRepository;
-import com.example.oil_api.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,7 +31,6 @@ import java.time.LocalDateTime;
 public class PickupService {
 
     private final PickupRepository pickupRepository;
-    private final UserRepository userRepository;
     private final ClientRepository clientRepository;
     private final PickupMapper pickupMapper;
     private final DocumentGenerationService documentGenerationService;

@@ -16,5 +16,6 @@
     <include file="changelog/010-add-daily-register-id-to-expense.xml" relativeToChangelogFile="true"/>
     <include file="changelog/011-add-daily-register-id-to-pickup.xml" relativeToChangelogFile="true"/>
     <include file="changelog/012-add-foreign-key-daily-register-pickup.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/013-product-table-creation.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

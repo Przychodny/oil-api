@@ -36,4 +36,6 @@ public class Driver extends User {
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     private Set<Expense> expenses;
+
+    private Set<StockItem> stockItems;
 }
